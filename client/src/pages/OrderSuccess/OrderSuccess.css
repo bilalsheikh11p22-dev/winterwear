@@ -1,0 +1,63 @@
+/* Order success – only GPU-friendly properties (transform / opacity) are animated. */
+.ow-stage {
+  background:
+    radial-gradient(120% 70% at 50% 100%, rgba(201, 221, 232, 0.16), transparent 60%),
+    linear-gradient(180deg, #0f1012 0%, #1a1d21 55%, #25292e 100%);
+  contain: layout paint;
+}
+
+.ow-snow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.ow-snow i {
+  position: absolute;
+  top: -10px;
+  width: 3px;
+  height: 3px;
+  border-radius: 9999px;
+  background: rgba(248, 247, 244, 0.55);
+  animation: ow-snow-fall linear infinite;
+  will-change: transform;
+}
+@keyframes ow-snow-fall {
+  to {
+    transform: translate3d(-24px, 110vh, 0);
+  }
+}
+
+.ow-cloud {
+  position: absolute;
+  height: 14px;
+  border-radius: 9999px;
+  background: rgba(201, 221, 232, 0.07);
+  filter: blur(6px);
+  animation: ow-cloud-drift linear infinite;
+  will-change: transform;
+}
+@keyframes ow-cloud-drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-140vw, 0, 0);
+  }
+}
+
+.ow-glow {
+  background: radial-gradient(closest-side, rgba(201, 221, 232, 0.35), transparent 70%);
+}
+
+.ow-wheel {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ow-snow i,
+  .ow-cloud {
+    animation: none;
+  }
+}

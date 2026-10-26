@@ -1,0 +1,57 @@
+{
+  "name": "winterwear-server",
+  "version": "1.0.0",
+  "description": "WinterWear Full-Stack Premium Fashion E-Commerce Backend",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "seed": "node src/seed/seedData.js",
+    "seed:store": "node scripts/seedStoreProducts.js",
+    "test": "node --test src/tests/**/*.test.js",
+    "worker": "node src/worker.js",
+    "db:indexes": "node scripts/syncNotificationIndexes.js"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
+  },
+  "keywords": [
+    "ecommerce",
+    "fashion",
+    "winterwear",
+    "luxury",
+    "express",
+    "mongodb",
+    "mongoose",
+    "rbac"
+  ],
+  "author": "WinterWear Architectural Engineering Team",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "cloudinary": "^2.5.1",
+    "compression": "^1.8.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0",
+    "helmet": "^8.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.9.5",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
+    "nodemailer": "^10.1.7",
+    "socket.io": "^4.8.4",
+    "stripe": "^17.5.0",
+    "swagger-ui-express": "^5.0.1",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9",
+    "socket.io-client": "^4.8.4",
+    "supertest": "^7.0.0"
+  }
+}

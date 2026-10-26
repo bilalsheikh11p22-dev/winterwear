@@ -1,0 +1,14 @@
+{
+  "name": "winterwear-platform",
+  "version": "1.0.0",
+  "description": "WinterWear Full-Stack Premium Winter Fashion E-Commerce Platform",
+  "scripts": {
+    "client": "npm --prefix client run dev",
+    "client:build": "npm --prefix client run build",
+    "server": "npm --prefix server run start",
+    "seed": "npm --prefix server run seed"
+  },
+  "keywords": ["winterwear", "luxury", "ecommerce", "gsap", "lenis", "react", "express", "mongodb"],
+  "author": "WinterWear Engineering Architecture Team",
+  "license": "ISC"
+}

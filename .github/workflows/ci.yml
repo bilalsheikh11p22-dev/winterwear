@@ -1,0 +1,86 @@
+name: WinterWear CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  # ─── Backend: Lint, Test ──────────────────────────────────────────────────────
+  backend:
+    name: Backend — Lint & Test
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: server
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: server/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run backend tests
+        run: npm test
+        env:
+          NODE_ENV: test
+          # Use insecure-but-unique secrets for CI — not the hardcoded defaults
+          JWT_ACCESS_SECRET: ci_access_secret_${{ github.run_id }}_not_for_production
+          JWT_REFRESH_SECRET: ci_refresh_secret_${{ github.run_id }}_not_for_production
+          MONGODB_URI: mongodb://localhost:27017/winterwear_test
+          STRIPE_SECRET_KEY: sk_test_placeholder_ci
+          CLOUDINARY_CLOUD_NAME: test
+          CLOUDINARY_API_KEY: test
+          CLOUDINARY_API_SECRET: test
+
+  # ─── Frontend: Lint, Build ────────────────────────────────────────────────────
+  frontend:
+    name: Frontend — Lint & Build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: client
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: client/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint (oxlint)
+        run: npm run lint
+
+      - name: Production build
+        run: npm run build
+        env:
+          VITE_API_BASE_URL: http://localhost:5000/api/v1
+          VITE_CURRENCY: PKR
+          VITE_FREE_SHIPPING_THRESHOLD: '5000'
+          VITE_FLAT_SHIPPING_FEE: '250'
+          VITE_ENABLE_COD: 'true'
+          VITE_STRIPE_PUBLISHABLE_KEY: pk_test_placeholder_ci
+          VITE_CLOUDINARY_CLOUD_NAME: placeholder_ci
+
+      - name: Upload dist artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-dist
+          path: client/dist
+          retention-days: 7

@@ -1,0 +1,29 @@
+User-agent: *
+
+# Disallow sensitive user flows
+Disallow: /admin
+Disallow: /admin/*
+Disallow: /checkout
+Disallow: /checkout/*
+Disallow: /my-orders
+Disallow: /my-orders/*
+Disallow: /login
+Disallow: /register
+Disallow: /order-tracking
+
+# Allow everything else (public storefront)
+Allow: /
+Allow: /shop
+Allow: /product/
+Allow: /category/
+Allow: /about
+Allow: /contact
+Allow: /size-guide
+Allow: /style-assistant
+Allow: /faq
+Allow: /shipping-policy
+Allow: /returns-policy
+Allow: /privacy-policy
+Allow: /terms
+
+Sitemap: https://winterwear.pk/sitemap.xml
