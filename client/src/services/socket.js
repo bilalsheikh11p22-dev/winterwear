@@ -25,7 +25,12 @@ const recoverAuth = async () => {
   }
 };
 
+// Serverless hosts (e.g. Vercel) cannot keep a WebSocket open. Set VITE_DISABLE_SOCKET=true there and the
+// app uses its built-in gentle polling instead (notifications still arrive, just every few seconds).
+const noopSocket = { connected: false, active: false, on() {}, off() {}, connect() {}, disconnect() {}, removeAllListeners() {} };
+
 export const acquireSocket = () => {
+  if (import.meta.env.VITE_DISABLE_SOCKET === 'true') return noopSocket;
   refs += 1;
   if (!socket) {
     socket = io(getApiOrigin(), {
@@ -46,6 +51,7 @@ export const acquireSocket = () => {
 };
 
 export const releaseSocket = () => {
+  if (import.meta.env.VITE_DISABLE_SOCKET === 'true') return;
   refs = Math.max(0, refs - 1);
   if (refs === 0 && socket) {
     socket.removeAllListeners();

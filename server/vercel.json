@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "functions": {
+    "api/index.js": { "maxDuration": 30, "includeFiles": "src/**" },
+    "api/cron.js": { "maxDuration": 60, "includeFiles": "src/**" }
+  },
+  "rewrites": [
+    { "source": "/api/cron", "destination": "/api/cron" },
+    { "source": "/(.*)", "destination": "/api/index" }
+  ],
+  "crons": [
+    { "path": "/api/cron", "schedule": "0 3 * * *" }
+  ]
+}
